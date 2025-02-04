@@ -1,6 +1,10 @@
 package database;
 
+import jdk.jfr.Category;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBConnector {
 
@@ -29,7 +33,7 @@ public class DBConnector {
         Users user = null;
         try {
             PreparedStatement preparedStatement =
-            connection.prepareStatement("SELECT * FROM users WHERE email=?");
+                    connection.prepareStatement("SELECT * FROM users WHERE email=?");
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -49,5 +53,35 @@ public class DBConnector {
         }
 
     }
+
+    public static List<NewsCategories> getCategories (){
+        List<NewsCategories> categories = null;
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("SELECT * FROM news_categories");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                categories = new ArrayList<>();
+                NewsCategories category = new NewsCategories();
+
+                category.setId(resultSet.getInt("id"));
+                category.setName(resultSet.getString("name"));
+
+                categories.add(category);
+
+
+            }
+
+            resultSet.close();
+            return categories;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 
 }

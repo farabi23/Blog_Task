@@ -16,10 +16,10 @@
 <div class="container">
   <form class="form-control" action="/login" method="post">
 
-    <label>Email:</label>
+    <label class="form-control">Email:</label>
     <input type="email" name="email">
 
-    <label>Password</label>
+    <label class="form-control">Password</label>
     <input type="password" name="password">
 
     <button type="submit">Login</button>
